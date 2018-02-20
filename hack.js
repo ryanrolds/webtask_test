@@ -22,6 +22,7 @@ module.exports = function (context, callback) {
   }
 
   pool.connect().then((client) => {
+    // Setup schema if it does not already exist
     if (!schemaExists) {
       console.log('Not sure if artists table exits, checking and creating if needed');
       let stmt = 'SELECT EXISTS(SELECT 1 FROM pg_tables WHERE schemaname = $1 AND tablename = $2)';
@@ -38,7 +39,7 @@ module.exports = function (context, callback) {
       }).then(() => {
         // We don't need to check for creation again
         schemaExists = true;
-        
+
         return upsertArtist(client, artist);
       }).catch((err) => {
         client.release();
