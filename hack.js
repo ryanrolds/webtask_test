@@ -6,11 +6,11 @@ let pool = null;
 let schemaExists = false;
 
 module.exports = function (context, callback) {
-  if (!context.data.ArtistName) {
+  if (!context.data.ArtistName && !context.body_raw) {
     console.log(context);
     return callback(new Error('ArtistName query string paramater is required'));
   }
-  let artist = context.data.ArtistName;
+  let artist = context.data.ArtistName || context.body_raw;
 
   // Setup connection if not already started
   if (!pool) {
