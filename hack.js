@@ -7,6 +7,7 @@ let schemaExists = false;
 
 module.exports = function (context, callback) {
   if (!context.data.ArtistName) {
+    console.log(context.data);
     return callback(new Error('ArtistName query string paramater is required'));
   }
   let artist = context.data.ArtistName;
