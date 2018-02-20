@@ -34,7 +34,8 @@ module.exports = function (context, callback) {
         }
         
         console.log('Creating artists table');
-        let table = 'CREATE TABLE artists (name varchar(256) PRIMARY KEY, total_count integer NOT NULL DEFAULT 0)';
+        let table = 'CREATE TABLE artists (name varchar(256) PRIMARY KEY, ' +
+          'total_count integer NOT NULL DEFAULT 0)';
         return client.query(table);
       }).then(() => {
         // We don't need to check for creation again
@@ -60,7 +61,8 @@ module.exports = function (context, callback) {
 
 function upsertArtist(client, artist) {
   let stmt = 'INSERT INTO artists (name, total_count) VALUES ($1, $2) ' +
-    'ON CONFLICT (name) DO UPDATE SET total_count = artists.total_count + 1 RETURNING total_count';
+    'ON CONFLICT (name) DO UPDATE SET total_count = artists.total_count + 1' +
+    'RETURNING total_count';
   let params = [artist, 1];
   return client.query(stmt, params);
 }
