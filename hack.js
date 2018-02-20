@@ -54,6 +54,7 @@ module.exports = function (context, callback) {
       throw err;
     }); 
   }).then((result) => {
+    console.log(artist, result.rows);
     return callback(null, 'Updated ' + artist + ' to ' + result.rows[0].total_count);
   }).catch((err) => {
     return callback(err);
